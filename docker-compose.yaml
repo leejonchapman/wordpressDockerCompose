@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+    wordpress:
+        environment:
+            - WORDPRESS_DB_PASSWORD= ## Enter password from ENV in wordpressdb below
+        container_name: wordpress
+        links:
+            - 'wordpressdb:mysql'
+        ports:
+            - '80:80'
+        volumes:
+            - '$PWD/html:/var/www/html'
+        image: wordpress
+
+    wordpressdb:
+        environment:
+            - MYSQL_ROOT_PASSWORD= ## Enter password
+            - MYSQL_DATABASE=wordpress
+        container_name: wordpressdb
+        volumes:
+            - '$PWD/database:/var/lib/mysql'
+        image: mariadb
